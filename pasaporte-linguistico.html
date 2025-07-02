@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasaporte Lingüístico - Español</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #2a3f5e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .passport-container {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            max-width: 500px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .passport-header {
+            background: #d4af37;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .passport-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.1) 10px,
+                rgba(255,255,255,0.1) 20px
+            );
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .passport-title {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .passport-subtitle {
+            color: #ffffff;
+            font-size: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .passport-body {
+            padding: 30px;
+            background: #eddfb9;
+        }
+
+        .photo-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .photo-container {
+            width: 120px;
+            height: 150px;
+            border: 3px solid #d4af37;
+            border-radius: 10px;
+            margin: 0 auto 15px;
+            overflow: hidden;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .photo-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .photo-placeholder {
+            color: #2a3f5e;
+            font-size: 14px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .photo-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .upload-btn {
+            background: #ff6b6b;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2a3f5e;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #ffffff;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .save-btn {
+            width: 100%;
+            background: #2a3f5e;
+            color: #ffffff;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(42, 63, 94, 0.3);
+        }
+
+        .save-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(42, 63, 94, 0.4);
+        }
+
+        .decorative-border {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .stamp {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border: 3px solid #d4af37;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(212, 175, 55, 0.1);
+            font-size: 12px;
+            color: #d4af37;
+            font-weight: bold;
+            transform: rotate(15deg);
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .passport-container {
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="passport-container">
+        <div class="decorative-border"></div>
+        <div class="stamp">ES</div>
+        
+        <div class="passport-header">
+            <h1 class="passport-title">PASAPORTE LINGÜÍSTICO</h1>
+            <p class="passport-subtitle">Español como Lengua Extranjera</p>
+        </div>
+
+        <div class="passport-body">
+            <div class="photo-section">
+                <div class="photo-container" id="photoContainer">
+                    <div class="photo-placeholder" id="photoPlaceholder">
+                        📸<br>Haz clic para subir tu foto
+                    </div>
+                </div>
+                <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                <button class="upload-btn" onclick="document.getElementById('photoInput').click()">
+                    Subir Foto
+                </button>
+            </div>
+
+            <form id="passportForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre">Nombre(s)</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidos">Apellidos</label>
+                        <input type="text" id="apellidos" name="apellidos" placeholder="Tus apellidos">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pais">País</label>
+                        <input type="text" id="pais" name="pais" placeholder="Tu país">
+                    </div>
+                    <div class="form-group">
+                        <label for="ciudad">Ciudad</label>
+                        <input type="text" id="ciudad" name="ciudad" placeholder="Tu ciudad">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="profesion">Profesión</label>
+                    <input type="text" id="profesion" name="profesion" placeholder="Tu profesión">
+                </div>
+
+                <button type="button" class="save-btn" onclick="savePassport()">
+                    ✨ Guardar Pasaporte
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Manejo de la subida de foto
+        document.getElementById('photoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const photoContainer = document.getElementById('photoContainer');
+                    photoContainer.innerHTML = `<img src="${e.target.result}" alt="Foto del estudiante" class="photo-preview">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Función para guardar el pasaporte
+        function savePassport() {
+            const formData = {
+                nombre: document.getElementById('nombre').value,
+                apellidos: document.getElementById('apellidos').value,
+                pais: document.getElementById('pais').value,
+                ciudad: document.getElementById('ciudad').value,
+                profesion: document.getElementById('profesion').value
+            };
+
+            // Verificar que todos los campos estén completos
+            const campos = Object.values(formData);
+            if (campos.some(campo => !campo.trim())) {
+                alert('Por favor, completa todos los campos antes de guardar.');
+                return;
+            }
+
+            // Crear elemento para descargar
+            const pasaporteCompleto = {
+                ...formData,
+                fecha: new Date().toLocaleDateString('es-ES'),
+                foto: document.querySelector('.photo-preview')?.src || null
+            };
+
+            // Mostrar confirmación
+            alert(`¡Pasaporte guardado exitosamente!\n\nEstudiante: ${formData.nombre} ${formData.apellidos}\nPaís: ${formData.pais}\nCiudad: ${formData.ciudad}\nProfesión: ${formData.profesion}`);
+
+            // Aquí podrías agregar funcionalidad adicional como:
+            // - Enviar datos a un servidor
+            // - Generar PDF
+            // - Guardar en almacenamiento local (aunque no está disponible en este entorno)
+        }
+
+        // Efectos de animación en los inputs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Efecto de escritura en tiempo real
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value) {
+                    this.style.borderColor = '#ff6b6b';
+                    this.style.backgroundColor = '#ffffff';
+                } else {
+                    this.style.borderColor = '#d4af37';
+                    this.style.backgroundColor = '#ffffff';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
